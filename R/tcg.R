@@ -1,5 +1,5 @@
 tcgR.affybatch <- function
-### Create a tab separated file for the phenoData slot. Used for Level 1
+### Create an affybatch object out of TCGA clinical and Level 1
 ### Affymetrix data.
 (clinical.biotab.file, 
 ### The filename with the TCGA clinical data in Biotab format.
