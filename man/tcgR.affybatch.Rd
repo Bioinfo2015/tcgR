@@ -1,7 +1,7 @@
 \name{tcgR.affybatch}
 \alias{tcgR.affybatch}
 \title{tcgR affybatch}
-\description{Create a tab separated file for the phenoData slot. Used for Level 1
+\description{Create an affybatch object out of TCGA clinical and Level 1
 Affymetrix data.}
 \usage{tcgR.affybatch(clinical.biotab.file, clinical.id.col = 1, sdrf.file, 
     sdrf.barcode.col = 2, celfile.path, ...)}

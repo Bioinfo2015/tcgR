@@ -40,8 +40,6 @@ file="tcga.seg",
 ### The segemented data output file.
 filter="\\.hg18", 
 ### Consider only files passing the specified grep filter. Default the genome version.
-level=3,
-### The TCGA access level.
 sdrf.file=NULL,
 ### Translate filename to TCGA barcode with specified sdrf file.
 sdrf.barcode.col=1,
@@ -53,7 +51,7 @@ verbose=TRUE,
 ...
 ### Additional arguments passed to read.delim() for reading the files.
 ) {
-    files <- dir(paste(path,"/Level_",level,"/", sep=""), full.names=TRUE)
+    files <- dir(path, full.names=TRUE)
 
     if (!is.null(filter)) {
         files <- files[grep(filter, files)]
@@ -88,13 +86,21 @@ file="tcga_methylation.txt",
 ### The output file
 sep="\t",
 ### The field separator character. See write.table().
+gene.level=TRUE,
+### average beta values for each gene
 ...
 ### Additional arguments passed to write.table().
 ) {
     x <- tcgR.segmented(path=path,file=NULL, filter=NULL)
+    if (gene.level) {
     data <-
     dcast(gene.symbol~barcode,value.var="beta.value",data=x,
     fun.aggregate=mean, na.rm=TRUE)
+    } else {
+        data <-
+        dcast(probe.name~barcode,value.var="beta.value",data=x)
+    }
+
     data <- data[!is.na(data[,1]),]
     data <- data[data[,1] != "",]
 
@@ -141,7 +147,7 @@ sdrf.file,
 ...
 ### Additional arguments passed to tcgR.segmented().
 ) {
-    x <- tcgR.segmented(path=path,file=NULL, filter=NULL,level=2,
+    x <- tcgR.segmented(path=path,file=NULL, filter=NULL,
     skip=1, sdrf.file=sdrf.file, ...)
 
     if (tumor.tcga.only) {
