@@ -32,7 +32,7 @@ celfile.path,
     ReadAffy(filenames=celfiles, phenoData=pd,...)
 }
 
-tcgR.write.segmented <- function
+tcgR.segmented <- function
 ### Create a segmented copy number file from TCGA Level 3 data
 (path=".", 
 ### The path containing the Level_3 folder.
@@ -80,7 +80,7 @@ verbose=TRUE,
 ### A data.frame containing the segmented data.   
 }
 
-tcgR.read.methylation <- function
+tcgR.methylation <- function
 ### Create a copynumbR.eset input file from Level 3 methylation data
 (path=".", 
 ### The path containing the Level_3 folder.
@@ -91,7 +91,7 @@ sep="\t",
 ...
 ### Additional arguments passed to write.table().
 ) {
-    x <- tcgR.write.segmented(path=path,file=NULL, filter=NULL)
+    x <- tcgR.segmented(path=path,file=NULL, filter=NULL)
     data <-
     dcast(gene.symbol~barcode,value.var="beta.value",data=x,
     fun.aggregate=mean, na.rm=TRUE)
@@ -101,7 +101,7 @@ sep="\t",
     write.table(data, file=file, sep=sep, row.names=FALSE,...)
 }
 
-tcgR.read.rnaseq <- function
+tcgR.rnaseq <- function
 ### Create a copynumbR.eset input file from Level 3 methylation data
 (path=".", 
 ### The path containing the Level_3 folder.
@@ -114,7 +114,7 @@ filter="rsem_gene_normalized",
 ...
 ### Additional arguments passed to write.table().
 ) {
-    x <- tcgR.write.segmented(path=path,file=NULL, filter=filter)
+    x <- tcgR.segmented(path=path,file=NULL, filter=filter)
     data <-
     dcast(gene_id~barcode,value.var="normalized_count",data=x,
     fun.aggregate=mean, na.rm=TRUE)
@@ -122,7 +122,7 @@ filter="rsem_gene_normalized",
     write.table(data, file=file, sep=sep, row.names=FALSE,...)
 }
 
-tcgR.read.acgh <- function
+tcgR.acgh <- function
 ### Create a copynumbR.eset input file from Level 2 aCGH data
 (path=".", 
 ### The path containing the Level_2 folder.
@@ -139,9 +139,9 @@ tumor.tcga.only=TRUE,
 sdrf.file,
 ### Translate filename to TCGA barcode with specified sdrf file.
 ...
-### Additional arguments passed to tcgR.write.segmented().
+### Additional arguments passed to tcgR.segmented().
 ) {
-    x <- tcgR.write.segmented(path=path,file=NULL, filter=NULL,level=2,
+    x <- tcgR.segmented(path=path,file=NULL, filter=NULL,level=2,
     skip=1, sdrf.file=sdrf.file, ...)
 
     if (tumor.tcga.only) {

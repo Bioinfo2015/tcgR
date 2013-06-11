@@ -1,8 +1,8 @@
-\name{tcgR.write.segmented}
-\alias{tcgR.write.segmented}
-\title{tcgR write segmented}
+\name{tcgR.segmented}
+\alias{tcgR.segmented}
+\title{tcgR segmented}
 \description{Create a segmented copy number file from TCGA Level 3 data}
-\usage{tcgR.write.segmented(path = ".", file = "tcga.seg", filter = "\\\.hg18", 
+\usage{tcgR.segmented(path = ".", file = "tcga.seg", filter = "\\\.hg18", 
     level = 3, sdrf.file = NULL, sdrf.barcode.col = 1, sdrf.filename.col = "Derived.Array.Data.Matrix.File", 
     verbose = TRUE, ...)}
 \arguments{

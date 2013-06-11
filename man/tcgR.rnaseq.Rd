@@ -1,13 +1,14 @@
-\name{tcgR.read.methylation}
-\alias{tcgR.read.methylation}
-\title{tcgR read methylation}
+\name{tcgR.rnaseq}
+\alias{tcgR.rnaseq}
+\title{tcgR rnaseq}
 \description{Create a copynumbR.eset input file from Level 3 methylation data}
-\usage{tcgR.read.methylation(path = ".", file = "tcga_methylation.txt", 
-    sep = "\\t", ...)}
+\usage{tcgR.rnaseq(path = ".", file = "tcga_rnaseq.txt", sep = "\\t", 
+    filter = "rsem_gene_normalized", ...)}
 \arguments{
   \item{path}{The path containing the Level_3 folder.}
   \item{file}{The output file}
   \item{sep}{The field separator character. See write.table().}
+  \item{filter}{Only consider the normalized gene level data by default.}
   \item{\dots}{Additional arguments passed to write.table().}
 }
 
