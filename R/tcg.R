@@ -85,18 +85,21 @@ tcgR.methylation <- function
 ### The path containing the Level_3 folder.
 file="tcga_methylation.txt",
 ### The output file
+filter=NULL, 
+### Consider only files passing the specified grep filter. Default all files
+### in the Level_3 folder.
 sep="\t",
 ### The field separator character. See write.table().
 gene.level=TRUE,
-### average beta values for each gene
+### Average beta values for each gene.
 ...
 ### Additional arguments passed to write.table().
 ) {
-    x <- tcgR.segmented(path=path,file=NULL, filter=NULL)
+    x <- tcgR.segmented(path=path,file=NULL, filter=filter)
     if (gene.level) {
-    data <-
-    dcast(gene.symbol~barcode,value.var="beta.value",data=x,
-    fun.aggregate=mean, na.rm=TRUE)
+        data <-
+        dcast(gene.symbol~barcode,value.var="beta.value",data=x,
+        fun.aggregate=mean, na.rm=TRUE)
     } else {
         data <-
         dcast(probe.name~barcode,value.var="beta.value",data=x)
@@ -114,10 +117,10 @@ tcgR.rnaseq <- function
 ### The path containing the Level_3 folder.
 file="tcga_rnaseq.txt",
 ### The output file
-sep="\t",
-### The field separator character. See write.table().
 filter="rsem_gene_normalized",
 ### Only consider the normalized gene level data by default.
+sep="\t",
+### The field separator character. See write.table().
 ...
 ### Additional arguments passed to write.table().
 ) {
@@ -135,8 +138,9 @@ tcgR.acgh <- function
 ### The path containing the Level_2 folder.
 file="tcga_acgh.txt",
 ### The output file
-sep="\t",
-### The field separator character. See write.table().
+filter=NULL, 
+### Consider only files passing the specified grep filter. Default all files
+### in the Level_2 folder.
 adf.file=NULL,
 ### Optionally, the ADF file containing probe information.
 adf.col="Reporter_ID",
@@ -145,10 +149,12 @@ tumor.tcga.only=TRUE,
 ### Filter normal and control TCGA samples.
 sdrf.file,
 ### Translate filename to TCGA barcode with specified sdrf file.
+sep="\t",
+### The field separator character. See write.table().
 ...
 ### Additional arguments passed to tcgR.segmented().
 ) {
-    x <- tcgR.segmented(path=path,file=NULL, filter=NULL,
+    x <- tcgR.segmented(path=path,file=NULL, filter=filter,
     skip=1, sdrf.file=sdrf.file, ...)
 
     if (tumor.tcga.only) {
@@ -175,9 +181,8 @@ tcgR.maf <- function
 file="tcga_somatic.txt",
 ### The output file
 coding.fun = function(x) ifelse(x=="Silent",1,2),
-### This function return an ExpressionSet with the mutation types coded
-### numerically. This function can be used to code mutations. 0 means no
-### mutation.
+### This function is used to code mutations numerically. 0 means no
+### mutation. Useful for loading the data as a numeric ExpressionSet.
 sep="\t",
 ### The field separator character. See write.table().
 verbose=TRUE

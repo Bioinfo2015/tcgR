@@ -7,9 +7,8 @@
 \arguments{
   \item{filename}{The filename of the MAF file. Can be a vector of filenames.}
   \item{file}{The output file}
-  \item{coding.fun}{This function return an ExpressionSet with the mutation types coded
-numerically. This function can be used to code mutations. 0 means no
-mutation.}
+  \item{coding.fun}{This function is used to code mutations numerically. 0 means no
+mutation. Useful for loading the data as a numeric ExpressionSet.}
   \item{sep}{The field separator character. See write.table().}
   \item{verbose}{Print some additional progress information.}
 }
