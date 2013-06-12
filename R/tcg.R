@@ -168,3 +168,34 @@ sdrf.file,
     write.table(data, file=file, sep=sep, row.names=FALSE)
 }
 
+tcgR.maf <- function
+### Parse a MAF file.
+(filename,
+### The filename of the MAF file. Can be a vector of filenames.
+file="tcga_somatic.txt",
+### The output file
+coding.fun = function(x) ifelse(x=="Silent",1,2),
+### This function return an ExpressionSet with the mutation types coded
+### numerically. This function can be used to code mutations. 0 means no
+### mutation.
+sep="\t",
+### The field separator character. See write.table().
+verbose=TRUE
+### Print some additional progress information.
+)
+{
+    if (verbose) print("Reading MAF file...")
+    if (length(filename) > 1) {
+        sm <- lapply(filename, read.delim)
+        cols <- Reduce(intersect, lapply(sm, colnames))
+        sm <- do.call(rbind, lapply(sm, function(x) x[,cols]))
+    } else {
+        sm <- read.delim(filename)
+    }
+    sm$.coding <- coding.fun(sm$Variant_Classification)
+    if (verbose) print("Generating mutation matrix...")
+    data <- dcast(Hugo_Symbol ~ Tumor_Sample_Barcode, data = sm, value.var = ".coding", fun.aggregate=max)
+    data[data < 0] <- 0
+    write.table(data, file=file, sep=sep, row.names=FALSE)
+}
+
