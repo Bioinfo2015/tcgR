@@ -1,7 +1,10 @@
 tcgR.affybatch <- function
 ### Create an affybatch object out of TCGA clinical and Level 1
 ### Affymetrix data.
-(clinical.biotab.file, 
+(
+celfile.path=".",
+### The path to the CEL files.
+clinical.biotab.file, 
 ### The filename with the TCGA clinical data in Biotab format.
 clinical.id.col=1,
 ### Column with the TCGA patient ID.
@@ -9,8 +12,6 @@ sdrf.file,
 ### The Level 1 CEL sdrf file.
 sdrf.barcode.col=2,
 ### Column with the barcode.
-celfile.path,
-### The path to the CEL files.
 ...
 ### alternative arguments passed to ReadAffy
 ) {
